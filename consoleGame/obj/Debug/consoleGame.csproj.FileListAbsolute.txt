@@ -1,0 +1,6 @@
+C:\Users\rocio\Documents\Visual Studio 2015\Projects\consoleGame\consoleGame\bin\Debug\consoleGame.exe.config
+C:\Users\rocio\Documents\Visual Studio 2015\Projects\consoleGame\consoleGame\bin\Debug\consoleGame.exe
+C:\Users\rocio\Documents\Visual Studio 2015\Projects\consoleGame\consoleGame\bin\Debug\consoleGame.pdb
+C:\Users\rocio\Documents\Visual Studio 2015\Projects\consoleGame\consoleGame\obj\Debug\consoleGame.csprojResolveAssemblyReference.cache
+C:\Users\rocio\Documents\Visual Studio 2015\Projects\consoleGame\consoleGame\obj\Debug\consoleGame.exe
+C:\Users\rocio\Documents\Visual Studio 2015\Projects\consoleGame\consoleGame\obj\Debug\consoleGame.pdb
