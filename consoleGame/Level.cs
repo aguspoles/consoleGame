@@ -26,11 +26,15 @@ namespace consoleGame
         {
             if (Console.KeyAvailable)
             {
-                Console.Clear();
                 c.Movement();
-                for (int i = 0; i < cuantEnemy; i++)
-                    es[i].Movement();
             }
+            for (int i = 0; i < cuantEnemy; i++)
+            {
+                es[i].Movement();
+                c.EnemyCollision(es[i]);
+            }
+            Console.Clear();
+            Draw();
         }
 
         public void Draw()

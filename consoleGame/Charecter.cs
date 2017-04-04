@@ -69,5 +69,36 @@ namespace consoleGame
             Console.SetCursorPosition(locationX, locationY);
             Console.Write("@");
         }
+
+        public int GetLocationX()
+        {
+            return locationX;
+        }
+
+        public int GetLocationY()
+        {
+            return locationY;
+        }
+
+        public void SetLocationX(int x)
+        {
+            locationX = x;
+        }
+
+        public void SetLocationY(int y)
+        {
+            locationY = y;
+        }
+
+        public void EnemyCollision(Enemy e)
+        {
+            if (locationX == e.GetLocationX()
+                && locationY == e.GetLocationY())
+            { 
+                Game.gameLoop = false;
+            }
+        }
+
+ 
     }
 }

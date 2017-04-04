@@ -11,7 +11,8 @@ namespace consoleGame
         static void Main(string[] args)
         {
             Game g = new Game();
-            g.Run();  
+            g.Run();
+            Console.ReadKey();
         }
     }
 }

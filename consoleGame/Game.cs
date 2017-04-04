@@ -19,10 +19,16 @@ namespace consoleGame
 
         public void Run()
         {
+            Console.SetCursorPosition(35, 15);
+            Console.WriteLine("MENU");
             while (gameLoop)
             {
                 actual.Run();
+                System.Threading.Thread.Sleep(100);
             }
+            Console.Clear();
+            Console.SetCursorPosition(35, 15);
+            Console.WriteLine("FIN DEL JUEGO");
         }
     }
 }
