@@ -10,20 +10,23 @@ namespace consoleGame
     {
         public static int cuantEnemy = 10;
         private Charecter c;
-        private Enemy[] es = new Enemy[cuantEnemy];
+        private Enemy[] es;
 
         public Level()
         {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             c = new Charecter();
+            es = new Enemy[cuantEnemy];
             for (int i = 0; i < cuantEnemy; i++)
                 es[i] = new Enemy();
-            Draw();
+            Draw();//para q dibuje cuando arranque
         }
 
         public void Run()
         {
             if (Console.KeyAvailable)
             {
+                Console.Clear();
                 c.Movement();
                 for (int i = 0; i < cuantEnemy; i++)
                     es[i].Movement();

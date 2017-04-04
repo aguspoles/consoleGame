@@ -8,9 +8,15 @@ namespace consoleGame
 {
     class Charecter
     {
-        private int locationX = 0;
-        private int locationY = 0;
+        private int locationX;
+        private int locationY;
         private ConsoleKeyInfo userKey;
+
+        public Charecter()
+        {
+            locationX = 5;
+            locationY = 5;
+        }
 
         public void Movement()
         {
@@ -24,7 +30,6 @@ namespace consoleGame
                         if (locationX > 0)
                         {
                             locationX -= 1;
-                            Draw();
                         }
                         break;
 
@@ -32,7 +37,6 @@ namespace consoleGame
                         if (locationX < 78)
                         {
                             locationX += 1;
-                            Draw();
                         }
                         break;
 
@@ -40,7 +44,6 @@ namespace consoleGame
                         if (locationY > 0)
                         {
                             locationY -= 1;
-                            Draw();
                         }
                         break;
 
@@ -48,7 +51,6 @@ namespace consoleGame
                         if (locationY < 24)
                         {
                             locationY += 1;
-                            Draw();
                         }
                         break;
 
@@ -56,13 +58,14 @@ namespace consoleGame
                         Game.gameLoop = false;
                         break;
                 }
-            
+
+                Draw();    
             }
         }
 
         public void Draw()
         {
-            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(locationX, locationY);
             Console.Write("@");
         }

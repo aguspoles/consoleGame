@@ -25,9 +25,10 @@ namespace consoleGame
 
         public void Draw()
         {
-            /*Random r = new Random();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Random r = new Random();
             locationX = r.Next(0, 78);
-            locationY = r.Next(0, 25);*/
+            locationY = r.Next(0, 25);
             Console.SetCursorPosition(locationX, locationY);
             Console.Write("X");
         }
