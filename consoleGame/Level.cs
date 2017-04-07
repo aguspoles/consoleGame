@@ -8,18 +8,20 @@ namespace consoleGame
 {
     class Level
     {
-        public static int cuantEnemy = 10;
+        private  int cuantEnemy = 20;
         private Charecter c;
         private Enemy[] es;
+        private Checkpoint cp;
 
         public Level()
         {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
             c = new Charecter();
             es = new Enemy[cuantEnemy];
+            cp = new Checkpoint();
+
+            Random r = new Random();
             for (int i = 0; i < cuantEnemy; i++)
-                es[i] = new Enemy();
-            Draw();//para q dibuje cuando arranque
+                es[i] = new Enemy(r.Next(0,78),r.Next(2,24));
         }
 
         public void Run()
@@ -33,6 +35,7 @@ namespace consoleGame
                 es[i].Movement();
                 c.EnemyCollision(es[i]);
             }
+            c.CheckpointCollision(cp);
             Console.Clear();
             Draw();
         }
@@ -40,7 +43,8 @@ namespace consoleGame
         public void Draw()
         {
             c.Draw();
-            for(int i = 0; i < cuantEnemy; i++)
+            cp.Draw();
+            for (int i = 0; i < cuantEnemy; i++)
                 es[i].Draw();
         }
     }

@@ -6,33 +6,24 @@ using System.Threading.Tasks;
 
 namespace consoleGame
 {
-    class Enemy
+    class Checkpoint
     {
         private int locationX;
         private int locationY;
-        private bool flag = true;
 
-        public Enemy(int x, int y)
+        public Checkpoint()
         {
-            locationX = x;
-            locationY = y;
-        }
-
-        public void Movement()
-        {
-            if (locationX < 78 && flag)
-                locationX++;
-            else flag = false;
-            if (locationX > 0 && !flag)
-                locationX--;
-            else flag = true;
+            locationX = 77;
+            locationY = 23;
         }
 
         public void Draw()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(locationX, locationY);
-            Console.Write("X");
+            Console.Write("**");
+            Console.SetCursorPosition(locationX, locationY+1);
+            Console.Write("**");
         }
 
         public int GetLocationX()

@@ -12,7 +12,6 @@ namespace consoleGame
         {
             Game g = new Game();
             g.Run();
-            Console.ReadKey();
         }
     }
 }

@@ -10,12 +10,14 @@ namespace consoleGame
     {
         private int locationX;
         private int locationY;
+        private bool UP, DOWN, LEFT, RIGHT;
         private ConsoleKeyInfo userKey;
 
         public Charecter()
         {
-            locationX = 5;
-            locationY = 5;
+            locationX = 0;
+            locationY = 0;
+            UP = DOWN = LEFT = RIGHT = true;
         }
 
         public void Movement()
@@ -27,39 +29,46 @@ namespace consoleGame
                 switch (userKey.Key)
                 {
                     case ConsoleKey.LeftArrow:
-                        if (locationX > 0)
+                        if (locationX > 1 && LEFT)
                         {
-                            locationX -= 1;
+                            locationX -= 2;
+                            LEFT = false;
+                            RIGHT = DOWN = UP = true;
                         }
                         break;
 
                     case ConsoleKey.RightArrow:
-                        if (locationX < 78)
+                        if (locationX < 77 && RIGHT)
                         {
-                            locationX += 1;
+                            locationX += 2;
+                            RIGHT = false;
+                            LEFT = UP = DOWN = true;
                         }
                         break;
 
                     case ConsoleKey.UpArrow:
-                        if (locationY > 0)
+                        if (locationY > 1 && UP)
                         {
-                            locationY -= 1;
+                            locationY -= 2;
+                            UP = false;
+                            DOWN = LEFT = RIGHT = true;
                         }
                         break;
 
                     case ConsoleKey.DownArrow:
-                        if (locationY < 24)
+                        if (locationY < 23 && DOWN)
                         {
-                            locationY += 1;
+                            locationY += 2;
+                            DOWN = false;
+                            UP = RIGHT = LEFT = true;
                         }
                         break;
 
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.Escape:
                         Game.gameLoop = false;
                         break;
                 }
-
-                Draw();    
+ 
             }
         }
 
@@ -70,6 +79,26 @@ namespace consoleGame
             Console.Write("@");
         }
 
+        public void EnemyCollision(Enemy e)
+        {
+            if (locationX == e.GetLocationX()
+                && locationY == e.GetLocationY())
+            { 
+                Game.gameLoop = false;
+            }
+        }
+
+        public void CheckpointCollision(Checkpoint cp)
+        {
+            if ((locationX == cp.GetLocationX()
+                && locationY == cp.GetLocationY())
+                || (locationX == cp.GetLocationX()+1
+                && locationY == cp.GetLocationY()+1))
+            {
+                Game.gameLoop = false;
+                Game.win = true;
+            }
+        }
         public int GetLocationX()
         {
             return locationX;
@@ -90,15 +119,7 @@ namespace consoleGame
             locationY = y;
         }
 
-        public void EnemyCollision(Enemy e)
-        {
-            if (locationX == e.GetLocationX()
-                && locationY == e.GetLocationY())
-            { 
-                Game.gameLoop = false;
-            }
-        }
 
- 
+
     }
 }
