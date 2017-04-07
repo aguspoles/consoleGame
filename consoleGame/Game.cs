@@ -19,7 +19,7 @@ namespace consoleGame
             Console.CursorVisible = false;
             gameLoop = true;
             win = false;
-            actual = new Level();
+
         }
 
         public void Run()
@@ -28,18 +28,26 @@ namespace consoleGame
             Console.SetCursorPosition(Console.WindowWidth/2 - 4,Console.WindowHeight/2 - 2);
             Console.WriteLine("MENU");
             Console.SetCursorPosition(Console.WindowWidth / 2 -11, Console.WindowHeight / 2 + 1);
-            Console.WriteLine("PRESS ENTER TO BEGIN");
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 2);
+            Console.WriteLine("PRESS ENTER TO BEGIN WITH 1 PLAYER");
+			Console.SetCursorPosition(Console.WindowWidth / 2 -13, Console.WindowHeight / 2 + 3);
+			Console.WriteLine("PRESS SPACE TO BEGIN WITH 2 PLAYERS");
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 15, Console.WindowHeight / 2 + 5);
             Console.WriteLine("PRESS ESCAPE TWICE TO EXIT");
 
                 userKey = Console.ReadKey();
                 if (userKey.Key == ConsoleKey.Escape)
                     return;
 
-            while (userKey.Key != ConsoleKey.Enter)
+			while (userKey.Key != ConsoleKey.Enter && userKey.Key != ConsoleKey.Spacebar)
             {
                 userKey = Console.ReadKey();
             } 
+
+			if (userKey.Key == ConsoleKey.Enter) {
+				actual = new Level(false);
+			} else if (userKey.Key == ConsoleKey.Spacebar) {
+				actual = new Level (true);
+			}
 
             while (gameLoop)
             {

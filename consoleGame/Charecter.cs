@@ -12,12 +12,20 @@ namespace consoleGame
         private int locationY;
         private bool UP, DOWN, LEFT, RIGHT;
         private ConsoleKeyInfo userKey;
-
-        public Charecter()
+		private bool id;
+		public Charecter(bool idd)
         {
-            locationX = 0;
-            locationY = 0;
+			id = idd;
+
+			if (id) {
+				locationX = 0;
+				locationY = 0;
+			} else {
+				locationX = 30;
+				locationY = 0;
+			}
             UP = DOWN = LEFT = RIGHT = true;
+
         }
 
         public void Movement()
@@ -25,49 +33,85 @@ namespace consoleGame
             if (Console.KeyAvailable)
             {
                 userKey = Console.ReadKey(true); 
+				if (id) {
+					switch (userKey.Key) {
+					case ConsoleKey.LeftArrow:
+						if (locationX > 1 && LEFT) {
+							locationX -= 2;
+							LEFT = false;
+							RIGHT = DOWN = UP = true;
+						}
+						break;
 
-                switch (userKey.Key)
-                {
-                    case ConsoleKey.LeftArrow:
-                        if (locationX > 1 && LEFT)
-                        {
-                            locationX -= 2;
-                            LEFT = false;
-                            RIGHT = DOWN = UP = true;
-                        }
-                        break;
+					case ConsoleKey.RightArrow:
+						if (locationX < 77 && RIGHT) {
+							locationX += 2;
+							RIGHT = false;
+							LEFT = UP = DOWN = true;
+						}
+						break;
 
-                    case ConsoleKey.RightArrow:
-                        if (locationX < 77 && RIGHT)
-                        {
-                            locationX += 2;
-                            RIGHT = false;
-                            LEFT = UP = DOWN = true;
-                        }
-                        break;
+					case ConsoleKey.UpArrow:
+						if (locationY > 1 && UP) {
+							locationY -= 2;
+							UP = false;
+							DOWN = LEFT = RIGHT = true;
+						}
+						break;
 
-                    case ConsoleKey.UpArrow:
-                        if (locationY > 1 && UP)
-                        {
-                            locationY -= 2;
-                            UP = false;
-                            DOWN = LEFT = RIGHT = true;
-                        }
-                        break;
+					case ConsoleKey.DownArrow:
+						if (locationY < 23 && DOWN) {
+							locationY += 2;
+							DOWN = false;
+							UP = RIGHT = LEFT = true;
+						}
+						break;
 
-                    case ConsoleKey.DownArrow:
-                        if (locationY < 23 && DOWN)
-                        {
-                            locationY += 2;
-                            DOWN = false;
-                            UP = RIGHT = LEFT = true;
-                        }
-                        break;
+					case ConsoleKey.Escape:
+						Game.gameLoop = false;
+						break;
+					}
+				} else {
 
-                    case ConsoleKey.Escape:
-                        Game.gameLoop = false;
-                        break;
-                }
+					switch (userKey.Key) {
+					case ConsoleKey.A:
+						if (locationX > 1 && LEFT) {
+							locationX -= 2;
+							LEFT = false;
+							RIGHT = DOWN = UP = true;
+						}
+						break;
+
+					case ConsoleKey.D:
+						if (locationX < 77 && RIGHT) {
+							locationX += 2;
+							RIGHT = false;
+							LEFT = UP = DOWN = true;
+						}
+						break;
+
+					case ConsoleKey.W:
+						if (locationY > 1 && UP) {
+							locationY -= 2;
+							UP = false;
+							DOWN = LEFT = RIGHT = true;
+						}
+						break;
+
+					case ConsoleKey.S:
+						if (locationY < 23 && DOWN) {
+							locationY += 2;
+							DOWN = false;
+							UP = RIGHT = LEFT = true;
+						}
+						break;
+
+					case ConsoleKey.Escape:
+						Game.gameLoop = false;
+						break;
+					}
+
+				}
  
             }
         }
@@ -76,7 +120,11 @@ namespace consoleGame
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(locationX, locationY);
-            Console.Write("@");
+			if (id) {
+				Console.Write ("%");
+			} else {
+				Console.Write ("@");
+			}
         }
 
         public void EnemyCollision(Enemy e)

@@ -22,7 +22,7 @@ namespace consoleGame
                     userKey = Console.ReadKey();
                     if (userKey.Key == ConsoleKey.Escape)
                         break;
-                } while (userKey.Key != ConsoleKey.Enter);
+				} while (userKey.Key != ConsoleKey.Enter && userKey.Key != ConsoleKey.Spacebar);
                 Console.Clear();
             }
             while (userKey.Key == ConsoleKey.Enter);

@@ -9,13 +9,19 @@ namespace consoleGame
     class Level
     {
         private  int cuantEnemy = 30;
+		public bool jug2;
         private Charecter c;
+		private Charecter d;
         private Enemy[] es;
         private Checkpoint cp;
 
-        public Level()
+		public Level(bool cant)
         {
-            c = new Charecter();
+			jug2 = cant;
+            c = new Charecter(true);
+			if(jug2)
+				d = new Charecter (false);
+			
             es = new Enemy[cuantEnemy];
             cp = new Checkpoint();
 
@@ -29,13 +35,19 @@ namespace consoleGame
             if (Console.KeyAvailable)
             {
                 c.Movement();
+				if(jug2)
+					d.Movement();
             }
             for (int i = 0; i < cuantEnemy; i++)
             {
                 es[i].Movement();
                 c.EnemyCollision(es[i]);
+				if (jug2)
+					d.EnemyCollision (es [i]);
             }
             c.CheckpointCollision(cp);
+			if (jug2)
+				d.CheckpointCollision (cp);
             Console.Clear();
             Draw();
         }
@@ -43,6 +55,8 @@ namespace consoleGame
         public void Draw()
         {
             c.Draw();
+			if (jug2)
+				d.Draw ();
             cp.Draw();
             for (int i = 0; i < cuantEnemy; i++)
                 es[i].Draw();
