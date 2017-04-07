@@ -8,10 +8,24 @@ namespace consoleGame
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            Game g = new Game();
-            g.Run();
+            ConsoleKeyInfo userKey;
+            Console.Title = "CONSOLE GAME";
+            do
+            {
+                Game g = new Game();
+                g.Run();
+                do
+                {
+                    userKey = Console.ReadKey();
+                    if (userKey.Key == ConsoleKey.Escape)
+                        break;
+                } while (userKey.Key != ConsoleKey.Enter);
+                Console.Clear();
+            }
+            while (userKey.Key == ConsoleKey.Enter);
         }
     }
 }

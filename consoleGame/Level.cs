@@ -8,7 +8,7 @@ namespace consoleGame
 {
     class Level
     {
-        private  int cuantEnemy = 20;
+        private  int cuantEnemy = 30;
         private Charecter c;
         private Enemy[] es;
         private Checkpoint cp;

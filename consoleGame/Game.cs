@@ -24,14 +24,22 @@ namespace consoleGame
 
         public void Run()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(Console.WindowWidth/2 - 4,Console.WindowHeight/2 - 2);
             Console.WriteLine("MENU");
             Console.SetCursorPosition(Console.WindowWidth / 2 -11, Console.WindowHeight / 2 + 1);
             Console.WriteLine("PRESS ENTER TO BEGIN");
-            do
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 2);
+            Console.WriteLine("PRESS ESCAPE TWICE TO EXIT");
+
+                userKey = Console.ReadKey();
+                if (userKey.Key == ConsoleKey.Escape)
+                    return;
+
+            while (userKey.Key != ConsoleKey.Enter)
             {
                 userKey = Console.ReadKey();
-            } while (userKey.Key != ConsoleKey.Enter);
+            } 
 
             while (gameLoop)
             {
@@ -43,10 +51,12 @@ namespace consoleGame
             if (win)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 8, Console.WindowHeight / 2);
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2);
                 Console.WriteLine("YOU WIN!");
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 1);
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 12, Console.WindowHeight / 2 + 1);
                 Console.WriteLine("PRESS ESCAPE TO QUIT");
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 2);
+                Console.WriteLine("PRESS ENTER TO RESTART");
             }
             else
             {
@@ -55,12 +65,11 @@ namespace consoleGame
                 Console.WriteLine("END OF GAME");
                 Console.SetCursorPosition(Console.WindowWidth / 2 - 12, Console.WindowHeight / 2 + 1);
                 Console.WriteLine("PRESS ESCAPE TO QUIT");
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 2);
+                Console.WriteLine("PRESS ENTER TO RESTART");
             }
-            do
-            {
-                userKey = Console.ReadKey();
-            } while (userKey.Key != ConsoleKey.Escape);
 
+      
         }
     }
 }
