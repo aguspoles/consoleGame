@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace consoleGame
 {
@@ -26,6 +23,19 @@ namespace consoleGame
                 Console.Clear();
             }
             while (userKey.Key == ConsoleKey.Enter);
+
+           /* FileStream fs = File.Create("datosJuego.txt");
+            StreamWriter sw = new StreamWriter("datosJuegos.txt");
+            sw.WriteLine("Hola mundo");
+            sw.Close();
+            fs.Close();
+
+            FileStream xs = File.OpenRead("datosJuego.txt");
+            StreamReader sr = new StreamReader(fs);
+            sr.Close();
+            xs.Close();*/
         }
+
+
     }
 }

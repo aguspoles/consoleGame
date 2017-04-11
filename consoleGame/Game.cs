@@ -44,9 +44,9 @@ namespace consoleGame
             } 
 
 			if (userKey.Key == ConsoleKey.Enter) {
-				actual = new Level(false);
+				actual = new Level(1);
 			} else if (userKey.Key == ConsoleKey.Spacebar) {
-				actual = new Level (true);
+				actual = new Level(2);
 			}
 
             while (gameLoop)

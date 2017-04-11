@@ -8,19 +8,19 @@ namespace consoleGame
 {
     class Level
     {
-        private  int cuantEnemy = 30;
-		public bool jug2;
+        private int cuantEnemy = 30;
         private Charecter c;
 		private Charecter d;
         private Enemy[] es;
         private Checkpoint cp;
+        private int L;
 
-		public Level(bool cant)
+		public Level(int l)
         {
-			jug2 = cant;
-            c = new Charecter(true);
-			if(jug2)
-				d = new Charecter (false);
+            L = l;
+            c = new Charecter(0,0);
+			if(L == 2)
+				d = new Charecter(10,0);
 			
             es = new Enemy[cuantEnemy];
             cp = new Checkpoint();
@@ -34,29 +34,30 @@ namespace consoleGame
         {
             if (Console.KeyAvailable)
             {
-                c.Movement();
-				if(jug2)
-					d.Movement();
+                c.Movement_1();
+                if (L == 2)
+                    d.Movement_2();
             }
-            for (int i = 0; i < cuantEnemy; i++)
-            {
-                es[i].Movement();
-                c.EnemyCollision(es[i]);
-				if (jug2)
-					d.EnemyCollision (es [i]);
-            }
-            c.CheckpointCollision(cp);
-			if (jug2)
-				d.CheckpointCollision (cp);
-            Console.Clear();
-            Draw();
+
+                for (int i = 0; i < cuantEnemy; i++)
+                {
+                    es[i].Movement();
+                    c.EnemyCollision(es[i]);
+                    if (L == 2)
+                        d.EnemyCollision(es[i]);
+                }
+                c.CheckpointCollision(cp);
+                if (L == 2)
+                    d.CheckpointCollision(cp);
+                Console.Clear();
+                Draw();
         }
 
         public void Draw()
         {
-            c.Draw();
-			if (jug2)
-				d.Draw ();
+            c.Draw_1();
+			if (L == 2)
+				d.Draw_2();
             cp.Draw();
             for (int i = 0; i < cuantEnemy; i++)
                 es[i].Draw();
