@@ -1,66 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace consoleGame
 {
     class Level
     {
         private int cuantEnemy = 30;
-        private Charecter c;
-		private Charecter d;
-        private Enemy[] es;
-        private Checkpoint cp;
-        private int L;
+        private int cuantItem = 10;
+        private Charecter player1;
+        private Charecter player2;
+        private Enemy[] enemys;
+        private List<Item> items;
+        private Checkpoint checkpoint;
+        private int L;//para un jugador o dos jugadores
+ 
+        public ConsoleKeyInfo userKey;
 
-		public Level(int l)
+        public Level(int l)
         {
+            Score.score = 0;
             L = l;
-            c = new Charecter(0,0);
-			if(L == 2)
-				d = new Charecter(10,0);
-			
-            es = new Enemy[cuantEnemy];
-            cp = new Checkpoint();
+            player1 = new Charecter(0, 0);
+            if (L == 2)
+                player2 = new Charecter(10, 0);
+
+            enemys = new Enemy[cuantEnemy];
+            items = new List<Item>();
+            checkpoint = new Checkpoint();
 
             Random r = new Random();
             for (int i = 0; i < cuantEnemy; i++)
-                es[i] = new Enemy(r.Next(0,78),r.Next(2,24));
+                enemys[i] = new Enemy(r.Next(0, Console.WindowWidth-2), r.Next(2, Console.WindowHeight-2));
+           
+            if (L == 1)
+            {
+                for (int i = 0; i < cuantItem; i++)
+                    items.Add(new Item(r.Next(0, Console.WindowWidth - 2), r.Next(2, Console.WindowHeight - 2)));
+            }
         }
 
         public void Run()
         {
             if (Console.KeyAvailable)
             {
-                c.Movement_1();
+                userKey = Console.ReadKey(true);
+                if (userKey.Key == ConsoleKey.Escape)
+                    return; 
+                player1.Movement_1(userKey);
                 if (L == 2)
-                    d.Movement_2();
+                    player2.Movement_2(userKey);
             }
 
-                for (int i = 0; i < cuantEnemy; i++)
-                {
-                    es[i].Movement();
-                    c.EnemyCollision(es[i]);
-                    if (L == 2)
-                        d.EnemyCollision(es[i]);
-                }
-                c.CheckpointCollision(cp);
+            for (int i = 0; i < enemys.Length; i++)
+            {
+                enemys[i].Movement();
+                player1.EnemyCollision(enemys[i]);
                 if (L == 2)
-                    d.CheckpointCollision(cp);
-                Console.Clear();
-                Draw();
+                    player2.EnemyCollision(enemys[i]);
+            }
+
+            if (L == 1)
+            {
+                player1.ItemCollision(items);
+            }
+
+            player1.CheckpointCollision(checkpoint);
+            if (L == 2)
+                player2.CheckpointCollision(checkpoint);
+
+            Console.Clear();
+            Draw();
         }
 
         public void Draw()
         {
-            c.Draw_1();
-			if (L == 2)
-				d.Draw_2();
-            cp.Draw();
-            for (int i = 0; i < cuantEnemy; i++)
-                es[i].Draw();
+            player1.Draw_1();
+            if (L == 2)
+                player2.Draw_2();
+            checkpoint.Draw();
+            for (int i = 0; i < enemys.Length; i++)
+                enemys[i].Draw();
+            if (L == 1)
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    items[i].Draw();
+                }
+            }
+            Score.Draw();
         }
     }
 }

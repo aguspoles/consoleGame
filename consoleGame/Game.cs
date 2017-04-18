@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace consoleGame
 {
@@ -12,72 +9,145 @@ namespace consoleGame
         public static bool win;
         private Level actual;
         private ConsoleKeyInfo userKey;
+        private Menu menu;
+        private GameOver gameOver;
 
         public Game()
         {
-            //Console.BackgroundColor = ConsoleColor.Black;
-            Console.CursorVisible = false;
             gameLoop = true;
             win = false;
-
+            Score.score = 0;
         }
 
         public void Run()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(Console.WindowWidth/2 - 4,Console.WindowHeight/2 - 2);
-            Console.WriteLine("MENU");
-            Console.SetCursorPosition(Console.WindowWidth / 2 -11, Console.WindowHeight / 2 + 1);
-            Console.WriteLine("PRESS ENTER TO BEGIN WITH 1 PLAYER");
-			Console.SetCursorPosition(Console.WindowWidth / 2 -13, Console.WindowHeight / 2 + 3);
-			Console.WriteLine("PRESS SPACE TO BEGIN WITH 2 PLAYERS");
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 15, Console.WindowHeight / 2 + 5);
-            Console.WriteLine("PRESS ESCAPE TWICE TO EXIT");
+            //Mensaje
+            string path = "C:/Users/rocio/Documents/Visual Studio 2015/Projects/consoleGame/juegoDeConsola/mensaje.txt";
+            Message(path);
 
-                userKey = Console.ReadKey();
-                if (userKey.Key == ConsoleKey.Escape)
-                    return;
-
-			while (userKey.Key != ConsoleKey.Enter && userKey.Key != ConsoleKey.Spacebar)
+            //Menu
+            MenuState();
+            if (userKey.Key == ConsoleKey.Enter)
             {
-                userKey = Console.ReadKey();
-            } 
+                actual = new Level(1);
+            }
+            else if (userKey.Key == ConsoleKey.Spacebar)
+            {
+                actual = new Level(2);
+            }
+            else if(userKey.Key == ConsoleKey.Escape) return;//termino el juego
 
-			if (userKey.Key == ConsoleKey.Enter) {
-				actual = new Level(1);
-			} else if (userKey.Key == ConsoleKey.Spacebar) {
-				actual = new Level(2);
-			}
 
+            //Game Loop
             while (gameLoop)
             {
                 actual.Run();
+                if(actual.userKey.Key == ConsoleKey.Escape)
+                {
+                    //back to menu
+                    Console.Clear();
+                    Message(path);
+                    MenuState();
+                    if (userKey.Key == ConsoleKey.Enter)
+                    {
+                        actual = new Level(1);
+                    }
+                    else if (userKey.Key == ConsoleKey.Spacebar)
+                    {
+                        actual = new Level(2);
+                    }
+                    else if(userKey.Key == ConsoleKey.Escape) return;//termino el juego
+                }
                 System.Threading.Thread.Sleep(50);
             }
 
             Console.Clear();
+
+            //Game Over
+            gameOver = new GameOver();
             if (win)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 7, Console.WindowHeight / 2);
-                Console.WriteLine("YOU WIN!");
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 12, Console.WindowHeight / 2 + 1);
-                Console.WriteLine("PRESS ESCAPE TO QUIT");
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 2);
-                Console.WriteLine("PRESS ENTER TO RESTART");
+                gameOver.Win();
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 8, Console.WindowHeight / 2);
-                Console.WriteLine("END OF GAME");
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 12, Console.WindowHeight / 2 + 1);
-                Console.WriteLine("PRESS ESCAPE TO QUIT");
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 13, Console.WindowHeight / 2 + 2);
-                Console.WriteLine("PRESS ENTER TO RESTART");
+                gameOver.Loss();
             }
 
-      
+            string path1 = "C:/Users/rocio/Documents/Visual Studio 2015/Projects/consoleGame/juegoDeConsola/score.txt";
+
+            SaveHighScore(path1);
+        }
+
+
+        public void MenuState()
+        {
+            menu = new Menu();
+            userKey = menu.Run();
+        }
+
+        public void Message(string path)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            FileStream fs;
+            if (!File.Exists(path))
+            {
+                fs = File.Create(path);
+                StreamWriter sw = new StreamWriter(fs);
+                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight/2);
+                Console.WriteLine("Ingrese mensaje de bienvenida: ");
+                string datos = Console.ReadLine();
+                sw.WriteLine(datos);
+                sw.Close();
+                Console.Clear();
+            }
+            fs = File.OpenRead(path);
+            StreamReader sr = new StreamReader(fs);
+            Console.SetCursorPosition(0, Console.WindowHeight/2);
+            Console.Write("Mensaje: " + sr.ReadLine());
+            sr.Close();
+            fs.Close();
+        }
+
+        public void SaveHighScore(string path)
+        {
+            if (File.Exists(path))
+            {
+                FileStream fs1 = File.OpenRead(path);
+                BinaryReader br = new BinaryReader(fs1);
+                br.ReadString();
+                int highScore = br.ReadInt32();
+                br.Close();
+                if (highScore < Score.score)
+                {
+                    WriteScore(path);
+                }
+                fs1.Close();
+            }
+            else WriteScore(path);
+        }
+
+        public void WriteScore(string path)
+        {
+            FileStream fs = File.OpenWrite(path);
+            BinaryWriter bw = new BinaryWriter(fs);
+            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+            Console.Write("Ingrese su nombre: ");
+            string nombre = Console.ReadLine();
+            bw.Write(nombre);
+            bw.Write(Score.score);
+            bw.Close();
+            fs.Close();
+        }
+
+        public void ReadScore(string path)
+        {
+            FileStream fs = File.OpenRead(path);
+            BinaryReader br = new BinaryReader(fs);
+            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2-5);
+            Console.Write(br.ReadString() + ": " + br.ReadInt32());
+            br.Close();
+            fs.Close();
         }
     }
 }

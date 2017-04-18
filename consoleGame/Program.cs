@@ -9,31 +9,24 @@ namespace consoleGame
         static void Main(string[] args)
         {
             ConsoleKeyInfo userKey;
+            Console.CursorVisible = false;
             Console.Title = "CONSOLE GAME";
-            do
-            {
+
+            while (true)
+             {
+                Console.Clear();
                 Game g = new Game();
                 g.Run();
                 do
                 {
                     userKey = Console.ReadKey();
-                    if (userKey.Key == ConsoleKey.Escape)
-                        break;
-				} while (userKey.Key != ConsoleKey.Enter && userKey.Key != ConsoleKey.Spacebar);
-                Console.Clear();
-            }
-            while (userKey.Key == ConsoleKey.Enter);
+                } while (userKey.Key != ConsoleKey.Enter &&
+                userKey.Key != ConsoleKey.Escape);
 
-           /* FileStream fs = File.Create("datosJuego.txt");
-            StreamWriter sw = new StreamWriter("datosJuegos.txt");
-            sw.WriteLine("Hola mundo");
-            sw.Close();
-            fs.Close();
+                if (userKey.Key == ConsoleKey.Escape) break;
+             }
 
-            FileStream xs = File.OpenRead("datosJuego.txt");
-            StreamReader sr = new StreamReader(fs);
-            sr.Close();
-            xs.Close();*/
+
         }
 
 

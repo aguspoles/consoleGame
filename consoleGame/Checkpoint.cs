@@ -13,8 +13,8 @@ namespace consoleGame
 
         public Checkpoint()
         {
-            locationX = 77;
-            locationY = 23;
+            locationX = Console.WindowWidth-3;
+            locationY = Console.WindowHeight-3;
         }
 
         public void Draw()
