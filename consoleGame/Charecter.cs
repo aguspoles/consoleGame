@@ -11,6 +11,8 @@ namespace consoleGame
         private int locationX;
         private int locationY;
         private bool UP, DOWN, LEFT, RIGHT;
+       
+        
 
         public Charecter(int x, int y)
         {
@@ -105,6 +107,8 @@ namespace consoleGame
                         UP = RIGHT = LEFT = true;
                     }
                     break;
+                case ConsoleKey.Spacebar:
+
 
                 case ConsoleKey.Escape:
                     Game.gameLoop = false;
@@ -127,16 +131,25 @@ namespace consoleGame
             Console.SetCursorPosition(locationX, locationY);
             Console.Write("@");
         }
-
-        public void EnemyCollision(Enemy e)
+        //No pude hacer que me funcionara el life down , asi q intente cambiandolo a un bool ;
+        public bool EnemyCollision(Enemy e)
+        {
+            if (locationX == e.GetLocationX()
+                && locationY == e.GetLocationY())
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+       /* public bool EnemyCollision(Enemy e)
         {
             if (locationX == e.GetLocationX()
                 && locationY == e.GetLocationY())
             {
                 Game.gameLoop = false;
             }
-        }
-
+            */
         public void ItemCollision(List<Item> items)
         {
             for (int i = 0; i < items.Count; i++)
