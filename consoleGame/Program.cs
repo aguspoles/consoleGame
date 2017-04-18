@@ -29,6 +29,16 @@ namespace consoleGame
 
         }
 
+        //disparo cool
+        /*      if (teclaUsada.Key == ConsoleKey.Spacebar)
+                {
+                    for (int i = GetLocationX(); i < Console.WindowWidth-1; i++)
+                    {
+                        Console.SetCursorPosition(i, GetLocationY());
+                        Console.Write("*");
+                    }
+                }*/
+
 
     }
 }
