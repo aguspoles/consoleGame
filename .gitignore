@@ -1,6 +1,6 @@
-bin/
-obj/
-Properties/
-mensaje.txt/
-score.txt/
-/*.txt
+bin
+obj
+Properties
+mensaje.txt
+score.txt
+*.txt
