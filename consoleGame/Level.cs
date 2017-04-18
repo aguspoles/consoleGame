@@ -13,7 +13,9 @@ namespace consoleGame
         private List<Item> items;
         private Checkpoint checkpoint;
         private int L;//para un jugador o dos jugadores
- 
+
+        private Lives life = new Lives('♥', 3);
+
         public ConsoleKeyInfo userKey;
 
         public Level(int l)
@@ -41,6 +43,7 @@ namespace consoleGame
 
         public void Run()
         {
+            
             if (Console.KeyAvailable)
             {
                 userKey = Console.ReadKey(true);
@@ -54,7 +57,12 @@ namespace consoleGame
             for (int i = 0; i < enemys.Length; i++)
             {
                 enemys[i].Movement();
-                player1.EnemyCollision(enemys[i]);
+
+                //Te lo cambie a un if , igual esta mal esto
+                if(player1.EnemyCollision(enemys[i]))
+                {
+                    life.LiveDown();
+                }
                 if (L == 2)
                     player2.EnemyCollision(enemys[i]);
             }

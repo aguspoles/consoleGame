@@ -12,6 +12,8 @@ namespace consoleGame
         private Menu menu;
         private GameOver gameOver;
 
+       private Lives life = new Lives('♥', 3);
+
         public Game()
         {
             gameLoop = true;
@@ -22,8 +24,8 @@ namespace consoleGame
         public void Run()
         {
             //Mensaje
-            string path = "C:/Users/rocio/Documents/Visual Studio 2015/Projects/consoleGame/juegoDeConsola/mensaje.txt";
-            Message(path);
+            string path = "C:/ Users / 822 / Desktop / juegoDeConsola";
+            //Message(path);
 
             //Menu
             MenuState();
@@ -42,11 +44,12 @@ namespace consoleGame
             while (gameLoop)
             {
                 actual.Run();
+                life.Draw();
                 if(actual.userKey.Key == ConsoleKey.Escape)
                 {
                     //back to menu
                     Console.Clear();
-                    Message(path);
+                    //Message(path);
                     MenuState();
                     if (userKey.Key == ConsoleKey.Enter)
                     {
@@ -74,9 +77,9 @@ namespace consoleGame
                 gameOver.Loss();
             }
 
-            string path1 = "C:/Users/rocio/Documents/Visual Studio 2015/Projects/consoleGame/juegoDeConsola/score.txt";
+            string path1 = "C:/Users/822/Desktop/juegoDeConsola";
 
-            SaveHighScore(path1);
+            //SaveHighScore(path1);
         }
 
 
@@ -86,7 +89,7 @@ namespace consoleGame
             userKey = menu.Run();
         }
 
-        public void Message(string path)
+       /* public void Message(string path)
         {
             Console.ForegroundColor = ConsoleColor.White;
             FileStream fs;
@@ -149,5 +152,6 @@ namespace consoleGame
             br.Close();
             fs.Close();
         }
+        */
     }
 }
