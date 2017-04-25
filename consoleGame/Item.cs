@@ -15,7 +15,7 @@ namespace consoleGame
 
         public void Draw()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(locationX, locationY);
             Console.Write("<>");
         }

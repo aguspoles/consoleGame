@@ -32,6 +32,7 @@ namespace consoleGame
                 stream.Close();
             }
             else player1 = new Charecter(0, 0);
+
             if (L == 2)
                 player2 = new Charecter(10, 0);
 
@@ -72,12 +73,6 @@ namespace consoleGame
             for (int i = 0; i < enemys.Length; i++)
             {
                 enemys[i].Movement();
-
-                //Te lo cambie a un if , igual esta mal esto
-                /*if(player1.EnemyCollision(enemys[i]))
-                {
-                    life.LiveDown();
-                }*/
                 player1.EnemyCollision(enemys[i]);
                 if (L == 2)
                     player2.EnemyCollision(enemys[i]);

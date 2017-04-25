@@ -131,17 +131,7 @@ namespace consoleGame
             Console.SetCursorPosition(locationX, locationY);
             Console.Write("@");
         }
-        //No pude hacer que me funcionara el life down , asi q intente cambiandolo a un bool ;
-        /* public bool EnemyCollision(Enemy e)
-         {
-             if (locationX == e.GetLocationX()
-                 && locationY == e.GetLocationY())
-             {
-                 return true;
-             }
-             else
-                 return false;
-         }*/
+      
         public void EnemyCollision(Enemy e)
         {
             if (locationX == e.GetLocationX()
@@ -215,5 +205,15 @@ namespace consoleGame
             RIGHT = (bool)info.GetValue("RIGHT", typeof(bool));
             DOWN = (bool)info.GetValue("DOWN", typeof(bool));
         }
+
+        //disparo cool
+        /*      if (teclaUsada.Key == ConsoleKey.Spacebar)
+                {
+                    for (int i = GetLocationX(); i < Console.WindowWidth-1; i++)
+                    {
+                        Console.SetCursorPosition(i, GetLocationY());
+                        Console.Write("*");
+                    }
+                }*/
     }
 }

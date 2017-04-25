@@ -13,7 +13,7 @@ namespace consoleGame
         private Menu menu;
         private GameOver gameOver;
 
-       private Lives life = new Lives('♥', 3);
+        private Lives life = new Lives('*', 3);
 
         public Game()
         {
@@ -38,15 +38,14 @@ namespace consoleGame
             {
                 actual = new Level(2);
             }
-            else if(userKey.Key == ConsoleKey.Escape) return;//termino el juego
-
+            else if (userKey.Key == ConsoleKey.Escape) return;//termino el juego
 
             //Game Loop
             while (gameLoop)
             {
                 actual.Run();
                 life.Draw();
-                if(actual.userKey.Key == ConsoleKey.Escape)
+                if (actual.userKey.Key == ConsoleKey.Escape)
                 {
                     //back to menu
                     Console.Clear();
@@ -60,7 +59,7 @@ namespace consoleGame
                     {
                         actual = new Level(2);
                     }
-                    else if(userKey.Key == ConsoleKey.Escape) return;//termino el juego
+                    else if (userKey.Key == ConsoleKey.Escape) return;//termino el juego
                 }
                 System.Threading.Thread.Sleep(50);
             }
@@ -78,6 +77,8 @@ namespace consoleGame
                 gameOver.Loss();
             }
 
+            if (File.Exists("CharecterData.dat"))
+                File.Delete("CharecterData.dat");
             string path1 = "score.txt";
             SaveHighScore(path1);
         }
@@ -97,7 +98,7 @@ namespace consoleGame
             {
                 fs = File.Create(path);
                 StreamWriter sw = new StreamWriter(fs);
-                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight/2);
+                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
                 Console.WriteLine("Ingrese mensaje de bienvenida: ");
                 string datos = Console.ReadLine();
                 sw.WriteLine(datos);
@@ -106,7 +107,7 @@ namespace consoleGame
             }
             fs = File.OpenRead(path);
             StreamReader sr = new StreamReader(fs);
-            Console.SetCursorPosition(0, Console.WindowHeight/2);
+            Console.SetCursorPosition(0, Console.WindowHeight / 2);
             Console.Write("Mensaje: " + sr.ReadLine());
             sr.Close();
             fs.Close();
@@ -147,11 +148,11 @@ namespace consoleGame
         {
             FileStream fs = File.OpenRead(path);
             BinaryReader br = new BinaryReader(fs);
-            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2-5);
+            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2 - 5);
             Console.Write(br.ReadString() + ": " + br.ReadInt32());
             br.Close();
             fs.Close();
         }
-        
+
     }
 }
