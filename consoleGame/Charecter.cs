@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace consoleGame
 {
-    class Charecter
+    [Serializable()]
+    class Charecter : ISerializable
     {
         private int locationX;
         private int locationY;
@@ -132,24 +132,25 @@ namespace consoleGame
             Console.Write("@");
         }
         //No pude hacer que me funcionara el life down , asi q intente cambiandolo a un bool ;
-        public bool EnemyCollision(Enemy e)
-        {
-            if (locationX == e.GetLocationX()
-                && locationY == e.GetLocationY())
-            {
-                return true;
-            }
-            else
-                return false;
-        }
-       /* public bool EnemyCollision(Enemy e)
+        /* public bool EnemyCollision(Enemy e)
+         {
+             if (locationX == e.GetLocationX()
+                 && locationY == e.GetLocationY())
+             {
+                 return true;
+             }
+             else
+                 return false;
+         }*/
+        public void EnemyCollision(Enemy e)
         {
             if (locationX == e.GetLocationX()
                 && locationY == e.GetLocationY())
             {
                 Game.gameLoop = false;
             }
-            */
+        }
+
         public void ItemCollision(List<Item> items)
         {
             for (int i = 0; i < items.Count; i++)
@@ -194,7 +195,25 @@ namespace consoleGame
             locationY = y;
         }
 
+        //serialization functions
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("PositionX", locationX);
+            info.AddValue("PositionY", locationY);
+            info.AddValue("UP", UP);
+            info.AddValue("LEFT", LEFT);
+            info.AddValue("RIGHT", RIGHT);
+            info.AddValue("DOWN", DOWN);
+        }
 
-
+        public Charecter(SerializationInfo info, StreamingContext context)
+        {
+            locationX = (int)info.GetValue("PositionX", typeof(int));
+            locationY = (int)info.GetValue("PositionY", typeof(int));
+            UP = (bool)info.GetValue("UP", typeof(bool));
+            LEFT = (bool)info.GetValue("LEFT", typeof(bool));
+            RIGHT = (bool)info.GetValue("RIGHT", typeof(bool));
+            DOWN = (bool)info.GetValue("DOWN", typeof(bool));
+        }
     }
 }

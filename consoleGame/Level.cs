@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace consoleGame
 {
@@ -22,7 +24,14 @@ namespace consoleGame
         {
             Score.score = 0;
             L = l;
-            player1 = new Charecter(0, 0);
+            if (File.Exists("CharecterData.dat"))
+            {
+                Stream stream = File.Open("CharecterData.dat", FileMode.Open);
+                BinaryFormatter bf = new BinaryFormatter();
+                player1 = (Charecter)bf.Deserialize(stream);
+                stream.Close();
+            }
+            else player1 = new Charecter(0, 0);
             if (L == 2)
                 player2 = new Charecter(10, 0);
 
@@ -48,7 +57,13 @@ namespace consoleGame
             {
                 userKey = Console.ReadKey(true);
                 if (userKey.Key == ConsoleKey.Escape)
-                    return; 
+                {
+                    Stream stream = File.Open("CharecterData.dat", FileMode.Create);
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(stream, player1);
+                    stream.Close();
+                    return;
+                }
                 player1.Movement_1(userKey);
                 if (L == 2)
                     player2.Movement_2(userKey);
@@ -59,10 +74,11 @@ namespace consoleGame
                 enemys[i].Movement();
 
                 //Te lo cambie a un if , igual esta mal esto
-                if(player1.EnemyCollision(enemys[i]))
+                /*if(player1.EnemyCollision(enemys[i]))
                 {
                     life.LiveDown();
-                }
+                }*/
+                player1.EnemyCollision(enemys[i]);
                 if (L == 2)
                     player2.EnemyCollision(enemys[i]);
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace consoleGame
 {
@@ -24,8 +25,8 @@ namespace consoleGame
         public void Run()
         {
             //Mensaje
-            string path = "C:/Users/rocio/Documents/Visual Studio 2015/Projects/consoleGame/juegoDeConsola/mensaje.txt";
-            //Message(path);
+            string path = "mensaje.txt";
+            Message(path);
 
             //Menu
             MenuState();
@@ -49,7 +50,7 @@ namespace consoleGame
                 {
                     //back to menu
                     Console.Clear();
-                    //Message(path);
+                    Message(path);
                     MenuState();
                     if (userKey.Key == ConsoleKey.Enter)
                     {
@@ -77,9 +78,8 @@ namespace consoleGame
                 gameOver.Loss();
             }
 
-            string path1 = "C:/Users/rocio/Documents/Visual Studio 2015/Projects/consoleGame/juegoDeConsola/score.txt";
-
-            //SaveHighScore(path1);
+            string path1 = "score.txt";
+            SaveHighScore(path1);
         }
 
 
@@ -89,7 +89,7 @@ namespace consoleGame
             userKey = menu.Run();
         }
 
-       /* public void Message(string path)
+        public void Message(string path)
         {
             Console.ForegroundColor = ConsoleColor.White;
             FileStream fs;
@@ -152,6 +152,6 @@ namespace consoleGame
             br.Close();
             fs.Close();
         }
-        */
+        
     }
 }
